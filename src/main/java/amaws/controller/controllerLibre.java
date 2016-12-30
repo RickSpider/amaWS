@@ -7,7 +7,6 @@ package amaws.controller;
 
 import amaws.model.Datos;
 import amaws.model.DatosIDUS;
-import java.util.ArrayList;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
