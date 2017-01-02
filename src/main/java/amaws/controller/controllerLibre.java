@@ -34,4 +34,12 @@ public class controllerLibre {
         return (dt);
     }
     
+    /*@RequestMapping(value="/ultimodato2")
+    public Datos Datos2() {
+        Datos dt;
+        DatosIDUS didus = new DatosIDUS(dataSource);
+        dt = didus.UltimoDato2();
+        return (dt);
+    }*/
+    
 }
