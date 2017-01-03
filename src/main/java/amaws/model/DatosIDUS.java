@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
@@ -71,25 +72,25 @@ public class DatosIDUS {
     //compresion de datos
      public Datos UltimoDato(){
         String sql = "SELECT fecha, data FROM datos ORDER BY fecha DESC LIMIT 1;";
-        String [] co = new String [2];
+        Object [] co = new Object [2];
         ResultSet rs;
         ArrayList <String> lista;
-        lista = new ArrayList();
+        lista = new ArrayList <>();
         Datos dt;
         try{
                PreparedStatement psConsulta = this.dataSouce.getConnection().prepareStatement(sql);
                rs = psConsulta.executeQuery();
                rs.next();
                
-               co [0] = String.valueOf(rs.getDate(1).toString());
-               co [1] = rs.getString(2);
+               co[0] = rs.getTimestamp(1);
+               co[1] = rs.getString(2);
                
         } catch (SQLException ex) {
             Logger.getLogger(DatosIDUS.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("error en el try del preparedstatement loco!!!!!!!!!!!!!!!");
         }
         
-        lista = conversion(co[1]);
+        lista = conversion(String.valueOf(co[1].toString()));
         ArrayList <Valores> lista2 = new ArrayList<>();
         
         for (int i = 0 ; i<lista.size(); i++){
@@ -118,7 +119,7 @@ public class DatosIDUS {
           
         }
         
-        dt = new Datos (co[0],lista2);
+        dt = new Datos ((Date) co[0],lista2);
         return dt;
         
     }

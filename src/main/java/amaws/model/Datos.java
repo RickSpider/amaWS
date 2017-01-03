@@ -5,7 +5,10 @@
  */
 package amaws.model;
 
+import java.util.Date;
 import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+
 
 /**
  *
@@ -13,19 +16,22 @@ import java.util.ArrayList;
  */
 public class Datos {
     
-    private String Fecha;
+    private Date Fecha;
     private ArrayList arrayDatos;
 
-    public Datos(String Fecha, ArrayList lista) {
+    public Datos(Date Fecha, ArrayList lista) {
         this.Fecha = Fecha;
         this.arrayDatos = lista;
+        
     }
 
     public String getFecha() {
-        return Fecha;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(Fecha);
+        
     }
 
-    public void setFecha(String Fecha) {
+    public void setFecha(Date Fecha) {
         this.Fecha = Fecha;
     }
 

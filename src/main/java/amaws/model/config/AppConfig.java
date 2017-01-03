@@ -23,8 +23,8 @@ public class AppConfig {
         driverManagerDataSource.setDriverClassName("org.postgresql.Driver");
         driverManagerDataSource.setUrl("jdbc:postgresql://localhost:5432/amaDB");
         driverManagerDataSource.setUsername("postgres");
-        //driverManagerDataSource.setPassword("postgres");
-        driverManagerDataSource.setPassword("tesis");
+        driverManagerDataSource.setPassword("postgres");
+        //driverManagerDataSource.setPassword("tesis");
         return driverManagerDataSource;
     }
     
