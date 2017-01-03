@@ -7,10 +7,18 @@ package amaws.controller;
 
 import amaws.model.Datos;
 import amaws.model.DatosIDUS;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -28,18 +36,40 @@ public class controllerLibre {
     
     @RequestMapping(value="/ultimodato")
     public Datos Datos() {
-        Datos dt;
         DatosIDUS didus = new DatosIDUS(dataSource);
-        dt = didus.UltimoDato();
-        return (dt);
+        return didus.UltimoDato();
     }
     
-    /*@RequestMapping(value="/ultimodato2")
-    public Datos Datos2() {
-        Datos dt;
+    @RequestMapping(value="/consultadia" ,method = RequestMethod.POST)
+    public ArrayList Datos2(@RequestBody String fecha) {
         DatosIDUS didus = new DatosIDUS(dataSource);
-        dt = didus.UltimoDato2();
-        return (dt);
-    }*/
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        
+        try {
+            date = sdf.parse(fecha);
+        } catch (ParseException ex) {
+            Logger.getLogger(controllerLibre.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return didus.consultaDia(date);
+       
+    }
+    
+    @RequestMapping(value="/consultamomento", method = RequestMethod.POST)
+    public Datos momento(@RequestBody String fecha) {
+        DatosIDUS didus = new DatosIDUS(dataSource);
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        
+        try {
+            date = sdf.parse(fecha);
+        } catch (ParseException ex) {
+            Logger.getLogger(controllerLibre.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return didus.consultaMomento(date);
+    }
     
 }

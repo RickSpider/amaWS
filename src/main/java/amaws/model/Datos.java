@@ -26,7 +26,7 @@ public class Datos {
     }
 
     public String getFecha() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd--HH:mm:ss");
         return sdf.format(Fecha);
         
     }
