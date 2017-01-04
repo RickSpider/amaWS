@@ -16,9 +16,13 @@ import java.util.logging.Logger;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -41,35 +45,34 @@ public class controllerLibre {
     }
     
     @RequestMapping(value="/consultadia" ,method = RequestMethod.POST)
-    public ArrayList Datos2(@RequestBody String fecha) {
+    public ArrayList Datos2(@RequestBody String fecha) throws ParseException {
         DatosIDUS didus = new DatosIDUS(dataSource);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         
-        try {
-            date = sdf.parse(fecha);
-        } catch (ParseException ex) {
-            Logger.getLogger(controllerLibre.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        date = sdf.parse(fecha);
         
         return didus.consultaDia(date);
        
     }
     
     @RequestMapping(value="/consultamomento", method = RequestMethod.POST)
-    public Datos momento(@RequestBody String fecha) {
+    public @ResponseBody Datos momento(@RequestBody String fecha) throws ParseException {
         DatosIDUS didus = new DatosIDUS(dataSource);
         
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         
-        try {
-            date = sdf.parse(fecha);
-        } catch (ParseException ex) {
-            Logger.getLogger(controllerLibre.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        date = sdf.parse(fecha);
+       
         return didus.consultaMomento(date);
+    }
+    
+    @ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="pasaste mal la fecha")
+    @ExceptionHandler(ParseException.class)
+    public void numberFormatHandler(){
+        //logger.log(Level.ERROR, "NumberFormatException!!!");
+        System.out.println("error de parse loco");
     }
     
 }
