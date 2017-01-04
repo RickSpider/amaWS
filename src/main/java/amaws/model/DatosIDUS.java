@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -74,6 +76,15 @@ public class DatosIDUS {
           
         }
         
+        Collections.sort(lista2, new Comparator <Valores>() {
+            
+            @Override
+            public int compare(Valores v1, Valores v2) {
+                    return new Integer(v1.getIntensidad()).compareTo(v2.getIntensidad());
+            }
+          
+        });
+          
         return lista2;
     }
     
@@ -151,5 +162,6 @@ public class DatosIDUS {
         dt = new Datos ((Date) co[0],compresionDatos(lista));
         return dt;
     }
-    
+
+  
 }
