@@ -7,16 +7,14 @@ package amaws.controller;
 
 import amaws.model.Datos;
 import amaws.model.DatosIDUS;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.sql.DataSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.postgresql.util.PSQLException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,29 +22,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.NestedServletException;
 
 /**
  *
  * @author BlackSpider
  */
 
-@SpringBootApplication
 @RestController
-@RequestMapping("/app")
+@RequestMapping(value = "/app")
 public class controllerLibre {
     
-    @Autowired
-    DataSource dataSource;
     
     @RequestMapping(value="/ultimodato")
-    public Datos Datos() {
-        DatosIDUS didus = new DatosIDUS(dataSource);
+    public Datos Datos() throws SQLException {
+        DatosIDUS didus = new DatosIDUS();
         return didus.UltimoDato();
     }
     
     @RequestMapping(value="/consultadia" ,method = RequestMethod.POST)
-    public ArrayList Datos2(@RequestBody String fecha) throws ParseException {
-        DatosIDUS didus = new DatosIDUS(dataSource);
+    public ArrayList Datos2(@RequestBody String fecha) throws ParseException, SQLException {
+        DatosIDUS didus = new DatosIDUS();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         
@@ -57,8 +53,8 @@ public class controllerLibre {
     }
     
     @RequestMapping(value="/consultamomento", method = RequestMethod.POST)
-    public @ResponseBody Datos momento(@RequestBody String fecha) throws ParseException {
-        DatosIDUS didus = new DatosIDUS(dataSource);
+    public @ResponseBody Datos momento(@RequestBody String fecha) throws ParseException, SQLException {
+        DatosIDUS didus = new DatosIDUS();
         
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
@@ -75,4 +71,34 @@ public class controllerLibre {
         System.out.println("error de parse loco");
     }
     
+     @ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR, reason="Error de Conexion con DB")
+    @ExceptionHandler(SQLException.class)
+    public void sqlException(){
+        //logger.log(Level.ERROR, "NumberFormatException!!!");
+        System.out.println("Error de Conexion a la DB");
+    }
+    
+    @ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="el parametro enviado es no valido")
+    @ExceptionHandler( HttpMessageNotReadableException.class)
+    public void  HttpMessageNotReadableException(){
+        //logger.log(Level.ERROR, "NumberFormatException!!!");
+        System.out.println(" error HttpMessageNotReadableException");
+    }
+
+   
+    @ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="el parametro enviado es no valido")
+    @ExceptionHandler(NestedServletException.class)
+    public void NestedServletException(){
+        //logger.log(Level.ERROR, "NumberFormatException!!!");
+        System.out.println("eroor NestedServletException ");
+    }
+    
+    @ResponseStatus(value=HttpStatus.CONFLICT, reason="La consulta echa no existe")
+    @ExceptionHandler(PSQLException.class)
+    public void PSQLException(){
+        //logger.log(Level.ERROR, "NumberFormatException!!!");
+        System.out.println("error PSQLException");
+    }
+ 
+       
 }

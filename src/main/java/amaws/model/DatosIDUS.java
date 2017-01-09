@@ -5,6 +5,8 @@
  */
 package amaws.model;
 
+import amaws.model.config.AppContext;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,9 +15,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.sql.DataSource;
+import org.postgresql.util.PSQLException;
 
 /**
  *
@@ -23,10 +24,12 @@ import javax.sql.DataSource;
  */
 public class DatosIDUS {
     
-    private final DataSource dataSouce;
+   private Connection conSQL;
 
-    public DatosIDUS(DataSource dataSouce) {
-        this.dataSouce = dataSouce;
+    public DatosIDUS() throws SQLException {
+        DataSource dataSource = (DataSource) AppContext.getContext().getBean("dataSource");
+        
+        this.conSQL = dataSource.getConnection();
     }
     
     private ArrayList conversion(String txt){
@@ -88,78 +91,69 @@ public class DatosIDUS {
         return lista2;
     }
     
-    public Datos UltimoDato(){
+    public Datos UltimoDato() throws PSQLException,SQLException{
         String sql = "SELECT fecha, data FROM datos ORDER BY fecha DESC LIMIT 1;";
         Object [] co = new Object [2];
         ResultSet rs;
         ArrayList <String> lista = new ArrayList();
         Datos dt;
-        try{
-               PreparedStatement psConsulta = this.dataSouce.getConnection().prepareStatement(sql);
-               rs = psConsulta.executeQuery();
-               rs.next();
+       
+        PreparedStatement psConsulta = this.conSQL.prepareStatement(sql);
+        rs = psConsulta.executeQuery();
+        rs.next();
                
-               co[0] = rs.getTimestamp(1);
-               co[1] = rs.getString(2);
-               
-        } catch (SQLException ex) {
-            Logger.getLogger(DatosIDUS.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("error en el try del preparedstatement loco!!!!!!!!!!!!!!!");
-        }
-        
+        co[0] = rs.getTimestamp(1);
+        co[1] = rs.getString(2);
+ 
         lista = conversion(String.valueOf(co[1].toString()));
         
         dt = new Datos ((Date) co[0],compresionDatos(lista));
+        
+        this.conSQL.close();
+        
         return dt;
         
     }
     
-    public ArrayList consultaDia(Date Fecha){
+    public ArrayList consultaDia(Date Fecha) throws PSQLException,SQLException{
         String sql = "SELECT fecha FROM datos WHERE date(fecha) = ? ORDER BY fecha ASC;";
         ResultSet rs;
         ArrayList <String>  lista = new ArrayList();
         
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd--HH:mm:ss");
-        try{
-               PreparedStatement psConsulta = this.dataSouce.getConnection().prepareStatement(sql);
-               psConsulta.setDate(1, new java.sql.Date(Fecha.getTime()));
-               rs = psConsulta.executeQuery();
+        
+        PreparedStatement psConsulta = this.conSQL.prepareStatement(sql);
+        psConsulta.setDate(1, new java.sql.Date(Fecha.getTime()));
+        rs = psConsulta.executeQuery();
                              
-               while(rs.next()){
-                   lista.add(sdf.format(rs.getTimestamp(1)));
-               }
-               
-        } catch (SQLException ex) {
-            Logger.getLogger(DatosIDUS.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("error en el try del preparedstatement loco!!!!!!!!!!!!!!!");
+        while(rs.next()){
+            lista.add(sdf.format(rs.getTimestamp(1)));
         }
         
+        this.conSQL.close();
         return lista;
     }
     
-    public Datos consultaMomento(Date Fecha){
+    public Datos consultaMomento(Date Fecha) throws PSQLException,SQLException{
         String sql = "SELECT fecha, data FROM datos WHERE fecha = ?";
         Object [] co = new Object [2];
         ResultSet rs;
         ArrayList <String> lista = new ArrayList();
         Datos dt;
-        try{
-               PreparedStatement psConsulta = this.dataSouce.getConnection().prepareStatement(sql);
-               psConsulta.setTimestamp(1, new java.sql.Timestamp(Fecha.getTime()));
-               rs = psConsulta.executeQuery();
-               rs.next();
+        //try{
+        PreparedStatement psConsulta = this.conSQL.prepareStatement(sql);
+        psConsulta.setTimestamp(1, new java.sql.Timestamp(Fecha.getTime()));
+        rs = psConsulta.executeQuery();
+        rs.next();
                
-               co[0] = rs.getTimestamp(1);
-               co[1] = rs.getString(2);
+        co[0] = rs.getTimestamp(1);
+        co[1] = rs.getString(2);
                
-        } catch (SQLException ex) {
-            Logger.getLogger(DatosIDUS.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("error en el try del preparedstatement loco!!!!!!!!!!!!!!!");
-        }
-        
         lista = conversion(String.valueOf(co[1].toString()));
        
         dt = new Datos ((Date) co[0],compresionDatos(lista));
+        
+        this.conSQL.close();
         return dt;
     }
 
