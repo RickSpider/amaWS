@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping("/app")
+@RequestMapping("/ama")
 public class ControllerRegistrar {
     
 }

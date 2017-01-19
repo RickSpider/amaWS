@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/app/user")
+@RequestMapping("/ama/user")
 public class ControllerUser {
     
     @RequestMapping(value="/existe", method = RequestMethod.POST)
@@ -34,16 +34,23 @@ public class ControllerUser {
     
     //@ResponseStatus(value=HttpStatus.OK, reason="Insercion Correcta")
     @RequestMapping(value="/insertar", method = RequestMethod.POST)
-    public void insertarUser(@RequestBody User u) throws SQLException{
+    public void insertarUser(@RequestBody User u) throws NullPointerException ,SQLException{
         UserIDUS uidus =  new UserIDUS();
         uidus.insertarUser(u);
     } 
     
-    @ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR, reason="Error de Conexion con DB")
+  /*  @ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR, reason="Error de Conexion con DB")
     @ExceptionHandler(SQLException.class)
     public void sqlException(){
         //logger.log(Level.ERROR, "NumberFormatException!!!");
         System.out.println("Error de Conexion a la DB");
+    }*/
+    
+    @ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Error NullPointerException")
+    @ExceptionHandler(NullPointerException.class)
+    public void NullPointerException(){
+        //logger.log(Level.ERROR, "NumberFormatException!!!");
+        System.out.println("Error NullPointerException");
     }
     
     

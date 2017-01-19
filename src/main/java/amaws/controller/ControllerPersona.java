@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping("/app/persona")
+@RequestMapping("/ama/persona")
 public class ControllerPersona {
       
     @RequestMapping(value="/datos", method = RequestMethod.POST)

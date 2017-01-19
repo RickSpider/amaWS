@@ -30,7 +30,7 @@ import org.springframework.web.util.NestedServletException;
  */
 
 @RestController
-@RequestMapping(value = "/app")
+@RequestMapping(value = "/ama")
 public class controllerLibre {
     
     
