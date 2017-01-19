@@ -24,7 +24,7 @@ public class controllerAlertas {
     @RequestMapping(value="/consulta", method = RequestMethod.POST)
     public Alerta consultaAlertas(@RequestBody String username) throws SQLException{
         AlertaIDUS aidus = new AlertaIDUS();
-        return aidus.consultaAlertas("rick");
+        return aidus.consultaAlertas(username);
     }
     
     @RequestMapping(value="/insertar", method = RequestMethod.POST)
