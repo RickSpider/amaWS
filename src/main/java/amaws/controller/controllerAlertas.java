@@ -7,7 +7,6 @@ package amaws.controller;
 
 import amaws.model.Alerta;
 import amaws.model.AlertaIDUS;
-import amaws.model.Pin;
 import java.sql.SQLException;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,9 +30,6 @@ public class controllerAlertas {
     @RequestMapping(value="/insertar", method = RequestMethod.POST)
     public void InsertarAlertas(@RequestBody Alerta a) throws SQLException{
         AlertaIDUS aidus = new AlertaIDUS();
-        //Pin p = new Pin("-57,66666:-25,66666",5,true,true);
-        //Alerta a = new Alerta ("alk");
-        //a.addPin(p);
         aidus.insertarAlerta(a);
     }
     
