@@ -55,7 +55,7 @@ public class PersonaIDUS {
     
     public void insertarPersona (Persona p) throws SQLException {
         
-        String sql = "INSERT INTO personas(username, nombre, apellido, tkn)VALUES (?, ?, ?, ?);";
+        String sql = "INSERT INTO personas(username, nombre, apellido, tkn, suscripcion)VALUES (?, ?, ?, ?, false);";
         PreparedStatement psInsertar = this.conSQL.prepareStatement(sql);
         psInsertar.setString(1,p.getUsername());
         psInsertar.setString(2,p.getNombre());
