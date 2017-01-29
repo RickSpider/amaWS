@@ -67,4 +67,23 @@ public class PersonaIDUS {
         
     }
     
+    //seccion orga
+    
+    public boolean suscripcion(String username) throws SQLException{
+        
+        String sql = "SELECT suscripcion FROM personas WHERE username = ?;";
+        ResultSet rs;
+        boolean existe;
+      
+        PreparedStatement psConsulta = this.conSQL.prepareStatement(sql);
+        psConsulta.setString(1,username);
+        rs = psConsulta.executeQuery();
+        rs.next();
+        existe = rs.getBoolean(1);
+        conSQL.close();
+         
+        return existe;
+        
+    }
+    
 }
