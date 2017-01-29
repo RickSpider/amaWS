@@ -29,8 +29,13 @@ public class ControllerUser {
     @RequestMapping(value="/existe", method = RequestMethod.POST)
     public boolean existeUser(@RequestBody String username) throws SQLException{
         UserIDUS uidus = new UserIDUS();
+      
+        System.out.println("consulto: "+username);
+        
         return uidus.existeUser(username);
     }
+    
+  
     
     //@ResponseStatus(value=HttpStatus.OK, reason="Insercion Correcta")
     @RequestMapping(value="/insertar", method = RequestMethod.POST)

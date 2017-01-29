@@ -54,6 +54,27 @@ public class ControllerPersona {
         //logger.log(Level.ERROR, "NumberFormatException!!!");
         System.out.println(" error HttpMessageNotReadableException");
     }
+    
+    //seccion orga
+    
+    @RequestMapping(value="/suscripcion", method = RequestMethod.POST)
+    public boolean suscripcion(@RequestBody String username) throws SQLException{
+        PersonaIDUS pidus = new PersonaIDUS();
+        return pidus.suscripcion("gio");
+    }
+    
+    @RequestMapping(value="/verificartarjeta", method = RequestMethod.POST)
+    public boolean verficarTarjeta(@RequestBody int a){
+        
+        if(a%2==0){
+             return true;
+        }
+        
+        return false;
+        
+    }
+    
+    //fin de seccion orga
 
    
    /* @ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="el parametro enviado es no valido")
@@ -69,4 +90,7 @@ public class ControllerPersona {
         //logger.log(Level.ERROR, "NumberFormatException!!!");
         System.out.println("error PSQLException");
     }
+    
+    
+   
 }
