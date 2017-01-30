@@ -61,7 +61,7 @@ public class ControllerPersona {
     @RequestMapping(value="/suscripcion", method = RequestMethod.POST)
     public boolean suscripcion(@RequestBody String username) throws SQLException{
         PersonaIDUS pidus = new PersonaIDUS();
-        return pidus.suscripcion("gio");
+        return pidus.suscripcion(username);
     }
     
     @RequestMapping(value="/verificartarjeta", method = RequestMethod.POST)
