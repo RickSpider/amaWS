@@ -86,4 +86,13 @@ public class PersonaIDUS {
         
     }
     
+    public void volvertrue(String username) throws SQLException{
+    String sql = "update personas set suscripcion = true where username = ?;";
+     PreparedStatement psConsulta = this.conSQL.prepareStatement(sql);
+     psConsulta.setString(1,username);
+     psConsulta.execute();
+     conSQL.close();
+    }
+    
+    //fin seccion orga
 }

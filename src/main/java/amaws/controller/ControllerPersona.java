@@ -7,6 +7,7 @@ package amaws.controller;
 
 import amaws.model.Persona;
 import amaws.model.PersonaIDUS;
+import amaws.model.orga;
 import java.sql.SQLException;
 import org.postgresql.util.PSQLException;
 import org.springframework.http.HttpStatus;
@@ -64,14 +65,17 @@ public class ControllerPersona {
     }
     
     @RequestMapping(value="/verificartarjeta", method = RequestMethod.POST)
-    public boolean verficarTarjeta(@RequestBody int a){
+    public boolean verficarTarjeta(@RequestBody orga o) throws SQLException{
         
-        if(a%2==0){
-            System.out.println("recibio: "+a);
+        if(o.getTarjeta()%2==0){
+            System.out.println("recibio: "+o.getTarjeta());
             System.out.println("es par");
+             PersonaIDUS pidus = new PersonaIDUS();
+             pidus.volvertrue(o.getUsername());
              return true;
         }
-        System.out.println("recibio: "+a);
+        
+        System.out.println("recibio: "+o.getTarjeta());
         System.out.println("es impar");
         return false;
         
