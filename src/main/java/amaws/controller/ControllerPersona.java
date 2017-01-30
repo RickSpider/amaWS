@@ -67,9 +67,12 @@ public class ControllerPersona {
     public boolean verficarTarjeta(@RequestBody int a){
         
         if(a%2==0){
+            System.out.println("recibio: "+a);
+            System.out.println("es par");
              return true;
         }
-        
+        System.out.println("recibio: "+a);
+        System.out.println("es impar");
         return false;
         
     }
