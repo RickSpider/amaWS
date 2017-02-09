@@ -55,7 +55,7 @@ public class PersonaIDUS {
     
     public void insertarPersona (Persona p) throws SQLException {
         
-        String sql = "INSERT INTO personas(username, nombre, apellido, tkn, suscripcion)VALUES (?, ?, ?, ?, false);";
+        String sql = "INSERT INTO personas(username, nombre, apellido, tkn)VALUES (?, ?, ?, ?);";
         PreparedStatement psInsertar = this.conSQL.prepareStatement(sql);
         psInsertar.setString(1,p.getUsername());
         psInsertar.setString(2,p.getNombre());
@@ -67,32 +67,5 @@ public class PersonaIDUS {
         
     }
     
-    //seccion orga
-    
-    public boolean suscripcion(String username) throws SQLException{
-        
-        String sql = "SELECT suscripcion FROM personas WHERE username = ?;";
-        ResultSet rs;
-        boolean existe;
-      
-        PreparedStatement psConsulta = this.conSQL.prepareStatement(sql);
-        psConsulta.setString(1,username);
-        rs = psConsulta.executeQuery();
-        rs.next();
-        existe = rs.getBoolean(1);
-        conSQL.close();
-         
-        return existe;
-        
-    }
-    
-    public void volvertrue(String username) throws SQLException{
-    String sql = "update personas set suscripcion = true where username = ?;";
-     PreparedStatement psConsulta = this.conSQL.prepareStatement(sql);
-     psConsulta.setString(1,username);
-     psConsulta.execute();
-     conSQL.close();
-    }
-    
-    //fin seccion orga
+
 }

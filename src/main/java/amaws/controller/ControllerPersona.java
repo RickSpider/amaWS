@@ -56,33 +56,7 @@ public class ControllerPersona {
         System.out.println(" error HttpMessageNotReadableException");
     }
     
-    //seccion orga
-    
-    @RequestMapping(value="/suscripcion", method = RequestMethod.POST)
-    public boolean suscripcion(@RequestBody String username) throws SQLException{
-        PersonaIDUS pidus = new PersonaIDUS();
-        return pidus.suscripcion(username);
-    }
-    
-    @RequestMapping(value="/verificartarjeta", method = RequestMethod.POST)
-    public boolean verficarTarjeta(@RequestBody orga o) throws SQLException{
-        
-        if(o.getTarjeta()%2==0){
-            System.out.println("recibio: "+o.getTarjeta());
-            System.out.println("es par");
-             PersonaIDUS pidus = new PersonaIDUS();
-             pidus.volvertrue(o.getUsername());
-             return true;
-        }
-        
-        System.out.println("recibio: "+o.getTarjeta());
-        System.out.println("es impar");
-        return false;
-        
-    }
-    
-    //fin de seccion orga
-
+   
    
    /* @ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="el parametro enviado es no valido")
     @ExceptionHandler(NestedServletException.class)

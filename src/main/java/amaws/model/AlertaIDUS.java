@@ -64,4 +64,19 @@ public class AlertaIDUS {
         this.conSQL.close();
     }
     
+    public void eliminarAlerta (Alerta al) throws SQLException{
+        
+        String sql = "DELETE FROM alertas WHERE username = ? AND coordenada = ?;";
+        
+        PreparedStatement ps = this.conSQL.prepareStatement(sql);
+        
+        for (int i = 0 ; i < al.getPins().size(); i++){
+            ps.setString(1,al.getUsername());
+            ps.setString(2,al.getPins().get(i).getCoordenada() );
+            ps.execute();
+        }
+        
+        this.conSQL.close();
+    }
+    
 }
