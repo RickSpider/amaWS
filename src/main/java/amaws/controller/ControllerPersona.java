@@ -7,7 +7,6 @@ package amaws.controller;
 
 import amaws.model.Persona;
 import amaws.model.PersonaIDUS;
-import amaws.model.orga;
 import java.sql.SQLException;
 import org.postgresql.util.PSQLException;
 import org.springframework.http.HttpStatus;
