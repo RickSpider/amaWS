@@ -36,6 +36,7 @@ dependencies {
     compile('org.springframework.security:spring-security-jwt:1.0.3.RELEASE')
     compile("org.springframework:spring-jdbc:4.3.3.RELEASE")
     compile("org.postgresql:postgresql:9.4.1211.jre7")
+    compile("com.relayrides:pushy:0.9.2")
     testCompile('org.springframework.boot:spring-boot-starter-test')
     
 }
