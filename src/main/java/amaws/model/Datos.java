@@ -25,7 +25,7 @@ public class Datos {
     
     public Datos(@JsonProperty("fechaCarga")String FechaCarga, @JsonProperty("arrayDatos")ArrayList lista) throws ParseException {
         
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         Date date = new Date();
         date = sdf.parse(FechaCarga);
         this.Fecha = date;
@@ -44,7 +44,7 @@ public class Datos {
     }
 
     public String getFecha() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         return sdf.format(Fecha);
         
     }
