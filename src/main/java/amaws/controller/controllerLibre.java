@@ -56,12 +56,18 @@ public class controllerLibre {
     public @ResponseBody Datos momento(@RequestBody String fecha) throws ParseException, SQLException {
         DatosIDUS didus = new DatosIDUS();
         
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd--HH:mm:ss");
         Date date = new Date();
         
         date = sdf.parse(fecha);
        
         return didus.consultaMomento(date);
+    }
+    
+    @RequestMapping(value="/insertar", method = RequestMethod.POST)
+    public void insertar(@RequestBody Datos d) throws ParseException, SQLException {
+        DatosIDUS didus = new DatosIDUS();
+        didus.insertarDato(d);
     }
     
     @ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="pasaste mal la fecha")

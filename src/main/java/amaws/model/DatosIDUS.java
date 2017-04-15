@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -157,5 +158,23 @@ public class DatosIDUS {
         return dt;
     }
 
+    public void insertarDato (Datos d) throws SQLException {
+        
+        ArrayList <String> lista = d.getArrayDatos();
+        String carga = "";
+        
+        for (String x : lista){
+            carga = carga+"["+x+"]";
+        }
+        
+        String sql = "INSERT INTO datos(fecha, data) VALUES (?, ?);";
+        PreparedStatement psInsertar = this.conSQL.prepareStatement(sql);
+        psInsertar.setTimestamp(1, new java.sql.Timestamp(d.getDate().getTime()));
+        psInsertar.setString(2,carga);
+        psInsertar.execute();
+        
+        this.conSQL.close();
+        
+    }
   
 }

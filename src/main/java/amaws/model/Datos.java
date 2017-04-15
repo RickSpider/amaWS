@@ -5,6 +5,8 @@
  */
 package amaws.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
@@ -19,16 +21,36 @@ public class Datos {
     private Date Fecha;
     private ArrayList arrayDatos;
 
+    
+    
+    public Datos(@JsonProperty("fechaCarga")String FechaCarga, @JsonProperty("arrayDatos")ArrayList lista) throws ParseException {
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd--HH:mm:ss");
+        Date date = new Date();
+        date = sdf.parse(FechaCarga);
+        this.Fecha = date;
+        this.arrayDatos = lista;
+        
+    }
+    
     public Datos(Date Fecha, ArrayList lista) {
         this.Fecha = Fecha;
         this.arrayDatos = lista;
         
     }
 
+    public void setArrayDatos(ArrayList arrayDatos) {
+        this.arrayDatos = arrayDatos;
+    }
+
     public String getFecha() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd--HH:mm:ss");
         return sdf.format(Fecha);
         
+    }
+    
+    public Date getDate(){
+        return this.Fecha;
     }
 
     public void setFecha(Date Fecha) {
