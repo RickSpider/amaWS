@@ -169,7 +169,7 @@ public class DatosIDUS {
         
         String sql = "INSERT INTO datos(fecha, data) VALUES (?, ?);";
         PreparedStatement psInsertar = this.conSQL.prepareStatement(sql);
-        psInsertar.setTimestamp(1, new java.sql.Timestamp(d.getDate().getTime()));
+        psInsertar.setTimestamp(1, new java.sql.Timestamp(d.pasarDate().getTime()));
         psInsertar.setString(2,carga);
         psInsertar.execute();
         

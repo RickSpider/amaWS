@@ -56,7 +56,7 @@ public class controllerLibre {
     public @ResponseBody Datos momento(@RequestBody String fecha) throws ParseException, SQLException {
         DatosIDUS didus = new DatosIDUS();
         
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd--HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         Date date = new Date();
         
         date = sdf.parse(fecha);
