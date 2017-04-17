@@ -161,16 +161,16 @@ public class DatosIDUS {
     public void insertarDato (Datos d) throws SQLException {
         
         ArrayList <String> lista = d.getArrayDatos();
-        String carga = "";
+        StringBuffer carga = new StringBuffer("");
         
         for (String x : lista){
-            carga = carga+"["+x+"]";
+            carga.append("["+x+"]");
         }
         
         String sql = "INSERT INTO datos(fecha, data) VALUES (?, ?);";
         PreparedStatement psInsertar = this.conSQL.prepareStatement(sql);
         psInsertar.setTimestamp(1, new java.sql.Timestamp(d.pasarDate().getTime()));
-        psInsertar.setString(2,carga);
+        psInsertar.setString(2,carga.toString());
         psInsertar.execute();
         
         this.conSQL.close();
