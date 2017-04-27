@@ -13,15 +13,15 @@ import java.util.ArrayList;
  */
 public class Valores {
     
-    private int intensidad;
+    private double intensidad;
     private ArrayList <String> coordenadas;
 
-    public Valores(int intensidad) {
+    public Valores(double intensidad) {
         this.intensidad = intensidad;
         this.coordenadas = new ArrayList();
     }
 
-    public int getIntensidad() {
+    public double getIntensidad() {
         return intensidad;
     }
 

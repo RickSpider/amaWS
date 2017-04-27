@@ -54,12 +54,12 @@ public class DatosIDUS {
         
         ArrayList <Valores> lista2 = new ArrayList();
         
-          for (int i = 0 ; i<lista.size(); i++){
+        for (int i = 0 ; i<lista.size(); i++){
           String [] dato = lista.get(i).split("\\;");
           if (lista2.size() > 0){
              boolean ban = false;
               for (int j=0 ; j<lista2.size();j++){
-                  if (lista2.get(j).getIntensidad() == Integer.parseInt(dato[0])){
+                  if (lista2.get(j).getIntensidad() == Double.parseDouble(dato[0])){
                        lista2.get(j).setCoordenadas(dato[1]);
                        ban = true;
                        j = lista2.size();
@@ -67,13 +67,13 @@ public class DatosIDUS {
               }
               
               if (!ban){
-                  Valores va = new Valores(Integer.parseInt(dato[0]));
+                  Valores va = new Valores(Double.parseDouble(dato[0]));
                   va.setCoordenadas(dato[1]);
                   lista2.add(va);
               }
               
           }else{
-              Valores va = new Valores(Integer.parseInt(dato[0]));
+              Valores va = new Valores(Double.parseDouble(dato[0]));
               va.setCoordenadas(dato[1]);
               lista2.add(va);
           }
@@ -84,7 +84,7 @@ public class DatosIDUS {
             
             @Override
             public int compare(Valores v1, Valores v2) {
-                    return new Integer(v1.getIntensidad()).compareTo(v2.getIntensidad());
+                    return new Double(v1.getIntensidad()).compareTo(v2.getIntensidad());
             }
           
         });
