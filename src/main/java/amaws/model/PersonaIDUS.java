@@ -67,5 +67,19 @@ public class PersonaIDUS {
         
     }
     
+    public void updatePersona (Persona p) throws SQLException{
+        
+        String sql = "UPDATE personas SET nombre= ?, apellido= ?, tkn = ? WHERE username = ?;";
+        PreparedStatement psUpdate = this.conSQL.prepareStatement(sql);
+        psUpdate.setString(1,p.getNombre());
+        psUpdate.setString(2,p.getApellido());
+        psUpdate.setString(3,p.getToken());
+        psUpdate.setString(4,p.getUsername());
+        psUpdate.execute();
+        
+        this.conSQL.close();
+        
+    }
+    
 
 }

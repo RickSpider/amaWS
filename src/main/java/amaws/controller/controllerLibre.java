@@ -99,12 +99,5 @@ public class controllerLibre {
         System.out.println("eroor NestedServletException ");
     }
     
-    @ResponseStatus(value=HttpStatus.CONFLICT, reason="La consulta echa no existe")
-    @ExceptionHandler(PSQLException.class)
-    public void PSQLException(){
-        //logger.log(Level.ERROR, "NumberFormatException!!!");
-        System.out.println("error PSQLException");
-    }
- 
        
 }

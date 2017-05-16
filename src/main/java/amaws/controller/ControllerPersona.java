@@ -41,7 +41,15 @@ public class ControllerPersona {
         pidus.insertarPersona(p);
     }
     
-    @ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR, reason="Error de Conexion con DB")
+    @ResponseStatus(value=HttpStatus.OK, reason="Update Correcto")
+    @RequestMapping(value="/update", method = RequestMethod.POST)
+    public void update (@RequestBody Persona p) throws SQLException{
+       // Persona p = new Persona ("gio","465ad4f6ads4f6asd4f");
+        PersonaIDUS pidus = new PersonaIDUS();
+        pidus.updatePersona(p);
+    }
+    
+    @ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR, reason="Error de Base de Datos")
     @ExceptionHandler(SQLException.class)
     public void sqlException(){
         //logger.log(Level.ERROR, "NumberFormatException!!!");

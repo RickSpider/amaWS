@@ -16,6 +16,7 @@ public class Pin {
     private int radio;
     private boolean avisar;
     private boolean enabled;
+    //private String lugar;
 
     public Pin(@JsonProperty("coordenada")String coordenada, @JsonProperty("radio")int radio, @JsonProperty("avisar")boolean avisar, @JsonProperty("enabled")boolean enabled) {
         this.coordenada = coordenada;

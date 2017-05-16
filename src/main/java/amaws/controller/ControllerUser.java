@@ -44,12 +44,13 @@ public class ControllerUser {
         uidus.insertarUser(u);
     } 
     
-  /*  @ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR, reason="Error de Conexion con DB")
+    
+   @ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR, reason="Error de BASE DE DATOS")
     @ExceptionHandler(SQLException.class)
     public void sqlException(){
         //logger.log(Level.ERROR, "NumberFormatException!!!");
         System.out.println("Error de Conexion a la DB");
-    }*/
+    }
     
     @ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Error NullPointerException")
     @ExceptionHandler(NullPointerException.class)
