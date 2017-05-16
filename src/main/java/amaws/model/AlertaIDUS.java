@@ -28,7 +28,7 @@ public class AlertaIDUS {
     
     public Alerta consultaAlertas (String username) throws SQLException{
     
-        String sql = "SELECT coordenada, radio, avisar FROM alertas WHERE username = ? AND enabled='true';";
+        String sql = "SELECT coordenada, radio, avisar, enabled FROM alertas WHERE username = ?;";
         Object [] co = new Object [3];
         
         PreparedStatement psConsulta = this.conSQL.prepareStatement(sql);
@@ -59,6 +59,21 @@ public class AlertaIDUS {
             ps.setInt(3,al.getPins().get(i).getRadio());
             ps.setBoolean(4,al.getPins().get(i).isAvisar());
             ps.setBoolean(5,al.getPins().get(i).isEnabled());
+            ps.execute();
+        }
+        this.conSQL.close();
+    }
+    
+    public void updateAlerta(Alerta al) throws SQLException{
+    
+        String sql = "UPDATE alertas SET enabled=? WHERE username =? AND coordenada =?;";
+        
+        PreparedStatement ps = this.conSQL.prepareStatement(sql);
+        
+        for (int i = 0 ; i < al.getPins().size(); i++){
+            ps.setBoolean(1,al.getPins().get(i).isEnabled());
+            ps.setString(2,al.getUsername());
+            ps.setString(3,al.getPins().get(i).getCoordenada() );
             ps.execute();
         }
         this.conSQL.close();

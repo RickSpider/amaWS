@@ -33,7 +33,7 @@ public class ControllerPersona {
         return pidus.consultaDatos(username);
     }
     
-    @ResponseStatus(value=HttpStatus.OK, reason="Insercion Correcta")
+    //@ResponseStatus(value=HttpStatus.OK, reason="Insercion Correcta")
     @RequestMapping(value="/insertar", method = RequestMethod.POST)
     public void insertar (@RequestBody Persona p) throws SQLException{
        // Persona p = new Persona ("gio","465ad4f6ads4f6asd4f");
@@ -41,7 +41,7 @@ public class ControllerPersona {
         pidus.insertarPersona(p);
     }
     
-    @ResponseStatus(value=HttpStatus.OK, reason="Update Correcto")
+    //@ResponseStatus(value=HttpStatus.OK, reason="Update Correcto")
     @RequestMapping(value="/update", method = RequestMethod.POST)
     public void update (@RequestBody Persona p) throws SQLException{
        // Persona p = new Persona ("gio","465ad4f6ads4f6asd4f");

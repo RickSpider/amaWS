@@ -39,4 +39,10 @@ public class controllerAlertas {
         aidus.eliminarAlerta(a);
     }
     
+    @RequestMapping(value="/update", method = RequestMethod.POST)
+    public void UpdateAlertas(@RequestBody Alerta a) throws SQLException{
+        AlertaIDUS aidus = new AlertaIDUS();
+        aidus.updateAlerta(a);
+    }
+    
 }
