@@ -13,20 +13,20 @@ import java.util.ArrayList;
  */
 public class Valores {
     
-    private double intensidad;
+    private double dbz;
     private ArrayList <String> coordenadas;
 
     public Valores(double intensidad) {
-        this.intensidad = intensidad;
+        this.dbz = intensidad;
         this.coordenadas = new ArrayList();
     }
 
-    public double getIntensidad() {
-        return intensidad;
+    public double getdBZ() {
+        return dbz;
     }
 
-    public void setIntensidad(int intensidad) {
-        this.intensidad = intensidad;
+    public void setdBZ(double dbz) {
+        this.dbz = dbz;
     }
 
     public ArrayList<String> getCoordenadas() {

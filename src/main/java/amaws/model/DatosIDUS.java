@@ -59,7 +59,7 @@ public class DatosIDUS {
           if (lista2.size() > 0){
              boolean ban = false;
               for (int j=0 ; j<lista2.size();j++){
-                  if (lista2.get(j).getIntensidad() == Double.parseDouble(dato[0])){
+                  if (lista2.get(j).getdBZ() == Double.parseDouble(dato[0])){
                        lista2.get(j).setCoordenadas(dato[1]);
                        ban = true;
                        j = lista2.size();
@@ -84,7 +84,7 @@ public class DatosIDUS {
             
             @Override
             public int compare(Valores v1, Valores v2) {
-                    return new Double(v1.getIntensidad()).compareTo(v2.getIntensidad());
+                    return new Double(v1.getdBZ()).compareTo(v2.getdBZ());
             }
           
         });
