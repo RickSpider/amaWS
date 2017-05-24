@@ -6,6 +6,7 @@
 package amaws.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.text.SimpleDateFormat;
  *
  * @author BlackSpider
  */
+@JsonPropertyOrder ({"fecha","arrayDatos"})
 public class Datos {
     
     private Date Fecha;

@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -133,6 +132,35 @@ public class DatosIDUS {
         
         this.conSQL.close();
         return lista;
+    }
+    
+    public ArrayList ultimosDiez() throws SQLException{
+    
+        String sql = "SELECT fecha, data FROM datos ORDER BY fecha DESC LIMIT 10;";
+        Object [] co = new Object [2];
+        ResultSet rs;
+         ArrayList <String> lista;
+        ArrayList <Datos> listad = new ArrayList();
+        Datos dt;
+        
+       
+        PreparedStatement psConsulta = this.conSQL.prepareStatement(sql);
+        rs = psConsulta.executeQuery();
+        while(rs.next()){
+            co[0] = rs.getTimestamp(1);
+            co[1] = rs.getString(2);
+            lista = new ArrayList();
+            lista = conversion(String.valueOf(co[1].toString()));
+            
+            dt = new Datos ((Date) co[0],compresionDatos(lista));
+            
+            listad.add(dt);
+        }
+
+        this.conSQL.close();
+        
+        return listad;
+        
     }
     
     public Datos consultaMomento(Date Fecha) throws PSQLException,SQLException{

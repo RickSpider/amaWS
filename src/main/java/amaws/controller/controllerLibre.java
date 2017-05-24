@@ -40,6 +40,12 @@ public class controllerLibre {
         return didus.UltimoDato();
     }
     
+    @RequestMapping(value="/ultimosdiez")
+    public ArrayList ultimosDiez() throws SQLException {
+        DatosIDUS didus = new DatosIDUS();
+        return didus.ultimosDiez();
+    }
+    
     @RequestMapping(value="/consultadia" ,method = RequestMethod.POST)
     public ArrayList Datos2(@RequestBody String fecha) throws ParseException, SQLException {
         DatosIDUS didus = new DatosIDUS();
@@ -51,6 +57,7 @@ public class controllerLibre {
         return didus.consultaDia(date);
        
     }
+    
     
     @RequestMapping(value="/consultamomento", method = RequestMethod.POST)
     public @ResponseBody Datos momento(@RequestBody String fecha) throws ParseException, SQLException {

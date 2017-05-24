@@ -5,12 +5,15 @@
  */
 package amaws.model;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.ArrayList;
 
 /**
  *
  * @author BlackSpider
  */
+
+@JsonPropertyOrder({"dBZ","coordenadas"})
 public class Valores {
     
     private double dbz;
