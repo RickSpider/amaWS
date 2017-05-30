@@ -92,8 +92,8 @@ public class DatosIDUS {
     }
     
     public Datos UltimoDato() throws PSQLException,SQLException{
-        String sql = "SELECT fecha, data FROM datos ORDER BY fecha DESC LIMIT 1;";
-        Object [] co = new Object [2];
+        String sql = "SELECT fecha, data, notificar, centroide FROM datos ORDER BY fecha DESC LIMIT 1;";
+        Object [] co = new Object [4];
         ResultSet rs;
         ArrayList <String> lista = new ArrayList();
         Datos dt;
@@ -104,10 +104,18 @@ public class DatosIDUS {
                
         co[0] = rs.getTimestamp(1);
         co[1] = rs.getString(2);
+        co[2] = rs.getBoolean(3);
+        co[3] = rs.getString(4);
  
         lista = conversion(String.valueOf(co[1].toString()));
         
-        dt = new Datos ((Date) co[0],compresionDatos(lista));
+        ArrayList <String> listac = new ArrayList();
+        
+        for(String txt : String.valueOf(co[3]).split(";")){
+            listac.add(txt);
+        }
+        
+        dt = new Datos ((Date) co[0],compresionDatos(lista),(Boolean) co[2], listac);
         
         this.conSQL.close();
         
@@ -136,8 +144,8 @@ public class DatosIDUS {
     
     public ArrayList ultimosDiez() throws SQLException{
     
-        String sql = "SELECT fecha, data FROM datos ORDER BY fecha DESC LIMIT 10;";
-        Object [] co = new Object [2];
+        String sql = "SELECT fecha, data, notificar, centroide FROM datos ORDER BY fecha DESC LIMIT 10;";
+        Object [] co = new Object [4];
         ResultSet rs;
          ArrayList <String> lista;
         ArrayList <Datos> listad = new ArrayList();
@@ -149,10 +157,18 @@ public class DatosIDUS {
         while(rs.next()){
             co[0] = rs.getTimestamp(1);
             co[1] = rs.getString(2);
+            co[2] = rs.getBoolean(3);
+            co[3] = rs.getString(4);
+            
             lista = new ArrayList();
             lista = conversion(String.valueOf(co[1].toString()));
-            
-            dt = new Datos ((Date) co[0],compresionDatos(lista));
+            ArrayList <String> listac = new ArrayList();  
+                    
+            for(String txt : String.valueOf(co[3]).split(";")){
+                listac.add(txt);
+            }
+
+            dt = new Datos ((Date) co[0],compresionDatos(lista),(Boolean) co[2], listac);
             
             listad.add(dt);
         }
@@ -164,7 +180,7 @@ public class DatosIDUS {
     }
     
     public Datos consultaMomento(Date Fecha) throws PSQLException,SQLException{
-        String sql = "SELECT fecha, data FROM datos WHERE fecha = ?";
+        String sql = "SELECT fecha, data, notificar, centroide FROM datos WHERE fecha = ?";
         Object [] co = new Object [2];
         ResultSet rs;
         ArrayList <String> lista = new ArrayList();
@@ -178,9 +194,22 @@ public class DatosIDUS {
         co[0] = rs.getTimestamp(1);
         co[1] = rs.getString(2);
                
-        lista = conversion(String.valueOf(co[1].toString()));
+        /*lista = conversion(String.valueOf(co[1].toString()));
        
-        dt = new Datos ((Date) co[0],compresionDatos(lista));
+        dt = new Datos ((Date) co[0],compresionDatos(lista));*/
+        
+        co[2] = rs.getBoolean(3);
+        co[3] = rs.getString(4);
+ 
+        lista = conversion(String.valueOf(co[1].toString()));
+        
+        ArrayList <String> listac = new ArrayList();
+        
+        for(String txt : String.valueOf(co[3]).split(";")){
+            listac.add(txt);
+        }
+        
+        dt = new Datos ((Date) co[0],compresionDatos(lista),(Boolean) co[2], listac);
         
         this.conSQL.close();
         return dt;
@@ -190,15 +219,26 @@ public class DatosIDUS {
         
         ArrayList <String> lista = d.getArrayDatos();
         StringBuffer carga = new StringBuffer("");
+        StringBuffer centroides = new StringBuffer("");
         
         for (String x : lista){
             carga.append("["+x+"]");
         }
         
-        String sql = "INSERT INTO datos(fecha, data) VALUES (?, ?);";
+        for (int i = 0 ; i < d.getCentroides().size() ; i++){
+            if (i != d.getCentroides().size()-1){
+                centroides.append(d.getCentroides().get(i)+";");
+            }else{
+                centroides.append(d.getCentroides().get(i));
+            }
+        }
+        System.out.println("aun no inserte");
+        String sql = "INSERT INTO datos(fecha, data, notificar, centroide) VALUES (?, ?,?,?);";
         PreparedStatement psInsertar = this.conSQL.prepareStatement(sql);
         psInsertar.setTimestamp(1, new java.sql.Timestamp(d.pasarDate().getTime()));
         psInsertar.setString(2,carga.toString());
+        psInsertar.setBoolean(3,d.isNotificar());
+        psInsertar.setString(4, centroides.toString());
         psInsertar.execute();
         
         this.conSQL.close();

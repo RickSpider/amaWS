@@ -17,27 +17,32 @@ import java.text.SimpleDateFormat;
  *
  * @author BlackSpider
  */
-@JsonPropertyOrder ({"fecha","arrayDatos"})
+@JsonPropertyOrder ({"fecha","notificar","centroides","arrayDatos"})
 public class Datos {
     
     private Date Fecha;
+    private boolean notificar;
+    private ArrayList centroides;
     private ArrayList arrayDatos;
-
     
-    
-    public Datos(@JsonProperty("fechaCarga")String FechaCarga, @JsonProperty("arrayDatos")ArrayList lista) throws ParseException {
+   
+    public Datos(@JsonProperty("fechaCarga")String FechaCarga, @JsonProperty("arrayDatos")ArrayList lista, @JsonProperty("notificar")boolean notificar, @JsonProperty("centroides")ArrayList centroides) throws ParseException {
         
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         Date date = new Date();
         date = sdf.parse(FechaCarga);
         this.Fecha = date;
         this.arrayDatos = lista;
+        this.notificar = notificar;
+        this.centroides = centroides;
         
     }
     
-    public Datos(Date Fecha, ArrayList lista) {
+    public Datos(Date Fecha, ArrayList lista, boolean notificar, ArrayList centroides) {
         this.Fecha = Fecha;
         this.arrayDatos = lista;
+        this.notificar = notificar;
+        this.centroides = centroides;
         
     }
 
@@ -66,6 +71,16 @@ public class Datos {
     public ArrayList getArrayDatos() {
         return arrayDatos;
     }
-       
+
+    public boolean isNotificar() {
+        return notificar;
+    }
+
+    public ArrayList getCentroides() {
+        return centroides;
+    }
+    
+    
+    
     
 }
