@@ -232,7 +232,7 @@ public class DatosIDUS {
                 centroides.append(d.getCentroides().get(i));
             }
         }
-        System.out.println("aun no inserte");
+        
         String sql = "INSERT INTO datos(fecha, data, notificar, centroide) VALUES (?, ?,?,?);";
         PreparedStatement psInsertar = this.conSQL.prepareStatement(sql);
         psInsertar.setTimestamp(1, new java.sql.Timestamp(d.pasarDate().getTime()));
