@@ -32,9 +32,9 @@ public class PersonaIDUS {
           
     public Persona consultaDatos(String username) throws PSQLException, SQLException {
         
-        String sql =  "SELECT username, nombre, apellido, tkn FROM personas WHERE username = ?;";
+        String sql =  "SELECT username, nombre, apellido, tkn, alertar FROM personas WHERE username = ?;";
         ResultSet rs = null;
-        String dato [] = new String[4];
+        Object dato [] = new Object[5];
         Persona pers = null;
          
         PreparedStatement psConsulta = this.conSQL.prepareStatement(sql);
@@ -46,7 +46,8 @@ public class PersonaIDUS {
         dato[1] = rs.getString(2);
         dato[2] = rs.getString(3);
         dato[3] = rs.getString(4);  
-        pers = new Persona(dato[0],dato[1],dato[2],dato[3]);
+        dato[4] = rs.getBoolean(5);
+        pers = new Persona(String.valueOf(dato[0]),String.valueOf(dato[1]),String.valueOf(dato[2]),String.valueOf(dato[3]), (Boolean) dato[4]);
         
         this.conSQL.close();
        
@@ -55,12 +56,13 @@ public class PersonaIDUS {
     
     public void insertarPersona (Persona p) throws SQLException {
         
-        String sql = "INSERT INTO personas(username, nombre, apellido, tkn)VALUES (?, ?, ?, ?);";
+        String sql = "INSERT INTO personas(username, nombre, apellido, tkn, alertar)VALUES (?, ?, ?, ?,?);";
         PreparedStatement psInsertar = this.conSQL.prepareStatement(sql);
         psInsertar.setString(1,p.getUsername());
         psInsertar.setString(2,p.getNombre());
         psInsertar.setString(3,p.getApellido());
         psInsertar.setString(4,p.getToken());
+        psInsertar.setBoolean(5,p.isAlertar());
         psInsertar.execute();
         
         this.conSQL.close();
@@ -69,12 +71,13 @@ public class PersonaIDUS {
     
     public void updatePersona (Persona p) throws SQLException{
         
-        String sql = "UPDATE personas SET nombre= ?, apellido= ?, tkn = ? WHERE username = ?;";
+        String sql = "UPDATE personas SET nombre= ?, apellido= ?, tkn = ?, alertar = ? WHERE username = ?;";
         PreparedStatement psUpdate = this.conSQL.prepareStatement(sql);
         psUpdate.setString(1,p.getNombre());
         psUpdate.setString(2,p.getApellido());
         psUpdate.setString(3,p.getToken());
-        psUpdate.setString(4,p.getUsername());
+        psUpdate.setBoolean(4,p.isAlertar());
+        psUpdate.setString(5,p.getUsername());
         psUpdate.execute();
         
         this.conSQL.close();

@@ -16,12 +16,14 @@ public class Persona {
     private String nombre;
     private String apellido;
     private String token;
+    private boolean alertar;
     //@JsonProperty("actividadid")
-    public Persona(@JsonProperty("username")String username, @JsonProperty("nombre")String nombre, @JsonProperty("apellido")String apellido, @JsonProperty("token")String token) {
+    public Persona(@JsonProperty("username")String username, @JsonProperty("nombre")String nombre, @JsonProperty("apellido")String apellido, @JsonProperty("token")String token, @JsonProperty("alertar")boolean alertar) {
         this.username = username;
         this.nombre = nombre;
         this.apellido = apellido;
         this.token = token;
+        this.alertar = alertar;
     }
     
    /* public Persona(@JsonProperty("username")String username,@JsonProperty("token")String token){
@@ -61,6 +63,14 @@ public class Persona {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public boolean isAlertar() {
+        return alertar;
+    }
+
+    public void setAlertar(boolean alertar) {
+        this.alertar = alertar;
     }
     
        
