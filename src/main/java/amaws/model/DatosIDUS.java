@@ -128,7 +128,7 @@ public class DatosIDUS {
         ResultSet rs;
         ArrayList <String>  lista = new ArrayList();
         
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd--HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         
         PreparedStatement psConsulta = this.conSQL.prepareStatement(sql);
         psConsulta.setDate(1, new java.sql.Date(Fecha.getTime()));
@@ -181,7 +181,7 @@ public class DatosIDUS {
     
     public Datos consultaMomento(Date Fecha) throws PSQLException,SQLException{
         String sql = "SELECT fecha, data, notificar, centroide FROM datos WHERE fecha = ?";
-        Object [] co = new Object [2];
+        Object [] co = new Object [4];
         ResultSet rs;
         ArrayList <String> lista = new ArrayList();
         Datos dt;
@@ -193,6 +193,7 @@ public class DatosIDUS {
                
         co[0] = rs.getTimestamp(1);
         co[1] = rs.getString(2);
+       
                
         /*lista = conversion(String.valueOf(co[1].toString()));
        
