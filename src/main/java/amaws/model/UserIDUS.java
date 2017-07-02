@@ -45,11 +45,12 @@ public class UserIDUS {
     
     public void insertarUser(User u) throws SQLException{
         
-        String sql = "INSERT INTO users (username, password, enabled) VALUES (?, ?, ?);";
+        String sql = "INSERT INTO users (username, password, enabled, alertar) VALUES (?, ?, ?, ?);";
         PreparedStatement psInsertar = this.conSQL.prepareStatement(sql);
         psInsertar.setString(1,u.getUsername());
         psInsertar.setString(2,u.getPassword());
         psInsertar.setBoolean(3, true);
+        psInsertar.setBoolean(4, u.isAlertar());
         psInsertar.execute();
         
                
@@ -60,5 +61,15 @@ public class UserIDUS {
         psInsertar.execute();
         
         this.conSQL.close();
+    }
+    
+    public void updateUser(User u) throws SQLException{
+        
+        String sql = "UPDATE users SET alertar = ? WHERE  username=?;";
+        PreparedStatement psUpdate = this.conSQL.prepareStatement(sql);
+        psUpdate.setBoolean(1, u.isAlertar());
+        psUpdate.setString(2,u.getUsername());
+        psUpdate.execute();
+        
     }
 }

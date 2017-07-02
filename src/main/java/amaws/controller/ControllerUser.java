@@ -30,7 +30,7 @@ public class ControllerUser {
     public boolean existeUser(@RequestBody String username) throws SQLException{
         UserIDUS uidus = new UserIDUS();
       
-        System.out.println("consulto: "+username);
+        //System.out.println("consulto: "+username);
         
         return uidus.existeUser(username);
     }
@@ -44,6 +44,11 @@ public class ControllerUser {
         uidus.insertarUser(u);
     } 
     
+    @RequestMapping(value="/update", method = RequestMethod.POST)
+    public void updateUser(@RequestBody User u) throws NullPointerException ,SQLException{
+        UserIDUS uidus =  new UserIDUS();
+        uidus.updateUser(u);
+    } 
     
    @ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR, reason="Error de BASE DE DATOS")
     @ExceptionHandler(SQLException.class)

@@ -16,10 +16,12 @@ public class User {
     private String username;
     private String password;
     private boolean enabled;
+    private boolean alertar;
 
-    public User(@JsonProperty("username")String username, @JsonProperty("password")String password) {
+    public User(@JsonProperty("username")String username, @JsonProperty("password")String password,@JsonProperty("alertar")boolean alertar ) {
         this.username = username;
         this.password = password;
+        this.alertar = alertar;
         this.enabled = true;
     }
 
@@ -39,10 +41,20 @@ public class User {
         this.password = password;
     }
 
+
+
+    public boolean isAlertar() {
+        return alertar;
+    }
+
+    public void setAlertar(boolean alertar) {
+        this.alertar = alertar;
+    }
+
     public boolean isEnabled() {
         return enabled;
     }
-
+    
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
