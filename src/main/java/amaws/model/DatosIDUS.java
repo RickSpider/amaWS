@@ -91,7 +91,7 @@ public class DatosIDUS {
         return lista2;
     }
     
-    public Datos UltimoDato() throws PSQLException,SQLException{
+    public Datos UltimoDato() throws SQLException, NullPointerException{
         String sql = "SELECT fecha, data, notificar, centroide FROM datos ORDER BY fecha DESC LIMIT 1;";
         Object [] co = new Object [4];
         ResultSet rs;
@@ -117,7 +117,7 @@ public class DatosIDUS {
         
         dt = new Datos ((Date) co[0],compresionDatos(lista),(Boolean) co[2], listac);
         
-        this.conSQL.close();
+        //this.conSQL.close();
         
         return dt;
         
@@ -138,7 +138,7 @@ public class DatosIDUS {
             lista.add(sdf.format(rs.getTimestamp(1)));
         }
         
-        this.conSQL.close();
+        //this.conSQL.close();
         return lista;
     }
     
@@ -173,7 +173,7 @@ public class DatosIDUS {
             listad.add(dt);
         }
 
-        this.conSQL.close();
+       // this.conSQL.close();
         
         return listad;
         
@@ -212,7 +212,7 @@ public class DatosIDUS {
         
         dt = new Datos ((Date) co[0],compresionDatos(lista),(Boolean) co[2], listac);
         
-        this.conSQL.close();
+        //this.conSQL.close();
         return dt;
     }
 
@@ -242,8 +242,46 @@ public class DatosIDUS {
         psInsertar.setString(4, centroides.toString());
         psInsertar.execute();
         
-        this.conSQL.close();
+        //this.conSQL.close();
         
+    }
+    
+    public boolean estadoAnterior() throws SQLException{
+        
+        
+        String sql = "SELECT notificar FROM datos ORDER BY fecha DESC LIMIT 1";
+        ResultSet rs;
+        
+        PreparedStatement psConsulta = this.conSQL.prepareStatement(sql);
+        rs = psConsulta.executeQuery();
+        rs.next();
+        System.out.println(rs.getBoolean(1)+" esto devuelve");
+        boolean estadoAnterior =rs.getBoolean(1); 
+        //this.conSQL.close();
+        return estadoAnterior;
+        
+    }
+    
+    public boolean hayDatos() throws SQLException{
+        
+        String sql = "SELECT count(*) FROM datos;";
+        ResultSet rs;
+        PreparedStatement psConsulta = this.conSQL.prepareStatement(sql);
+        rs = psConsulta.executeQuery();
+        rs.next();
+        int cantidad = rs.getInt(1);
+        //System.out.println("cantidad de datos es "+cantidad);
+        //this.conSQL.close();
+        if (cantidad > 1){
+           // System.out.println("retornare true");
+            return true;
+        }
+       // System.out.println("retornare false");
+        return false;
+    }
+    
+    public void cerrarConexion() throws SQLException{
+        this.conSQL.close();
     }
   
 }

@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.sql.DataSource;
 
 /**
@@ -71,5 +72,22 @@ public class UserIDUS {
         psUpdate.setString(2,u.getUsername());
         psUpdate.execute();
         
+    }
+    
+    public ArrayList<String> listarAlertas() throws SQLException{
+        
+        String sql = "SELECT username FROM users WHERE alertar = true;";
+        ArrayList<String> tokens = new ArrayList<String>(); 
+        ResultSet rs;
+         
+        PreparedStatement psConsulta = this.conSQL.prepareStatement(sql);
+        rs = psConsulta.executeQuery();
+        while(rs.next()){
+            String token = rs.getString(1);
+            tokens.add(token);
+        }
+        
+        conSQL.close();
+        return tokens;
     }
 }
