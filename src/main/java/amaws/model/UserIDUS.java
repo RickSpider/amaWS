@@ -58,7 +58,7 @@ public class UserIDUS {
         sql = "INSERT INTO authorities(username, authority)VALUES (?, ?);";
         psInsertar = this.conSQL.prepareStatement(sql);
         psInsertar.setString(1,u.getUsername());
-        psInsertar.setString(2,"user");
+        psInsertar.setString(2,"AMA_CLIENT");
         psInsertar.execute();
         
         this.conSQL.close();

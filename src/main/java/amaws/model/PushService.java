@@ -76,7 +76,7 @@ public class PushService {
             //System.out.println("entre en envio de notificacion");
             ApnsService service = APNS.newService().withCert("certificadoP.p12","123456").withSandboxDestination().build();
             //System.out.println("pase el apn service");
-            String payload = APNS.newPayload().alertBody("hello push").build();
+            String payload = APNS.newPayload().alertBody("Se detectaron nubes de lluvia").build();
 
             tokens.forEach((t) -> {
                 service.push(t, payload);

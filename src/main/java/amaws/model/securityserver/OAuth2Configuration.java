@@ -36,15 +36,14 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         
         clients.inMemory()
-            .withClient("AmaWS")
+            .withClient("Ama@admin")
             .scopes("AMA")
-            .secret("AmaPASS")
+            .secret("amaPass2017")
             .autoApprove(true)
             .authorities("AMA_ADMIN", "AMA_CLIENT")
-            //.accessTokenValiditySeconds(3600)
-            //.refreshTokenValiditySeconds(3600)
+            .accessTokenValiditySeconds(86400)
+            .refreshTokenValiditySeconds(604800)
             .authorizedGrantTypes("implicit","refresh_token", "password", "authorization_code");
-            
     }
     
     /*apartir de aca comienza la configuracion de los token*/
@@ -52,6 +51,7 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.tokenStore(tokenStore()).tokenEnhancer(jwtTokenEnhancer()).authenticationManager(authenticationManager);
+        
     }
 
     @Autowired

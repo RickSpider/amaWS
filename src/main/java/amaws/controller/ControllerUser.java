@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/ama/user")
 public class ControllerUser {
     
+    //@PreAuthorize("hasAuthority('AMA_ADMIN')")
     @RequestMapping(value="/existe", method = RequestMethod.POST)
     public boolean existeUser(@RequestBody String username) throws SQLException{
         UserIDUS uidus = new UserIDUS();
@@ -38,12 +39,14 @@ public class ControllerUser {
   
     
     //@ResponseStatus(value=HttpStatus.OK, reason="Insercion Correcta")
+    //@PreAuthorize("hasAuthority('AMA_ADMIN')")
     @RequestMapping(value="/insertar", method = RequestMethod.POST)
     public void insertarUser(@RequestBody User u) throws NullPointerException ,SQLException{
         UserIDUS uidus =  new UserIDUS();
         uidus.insertarUser(u);
     } 
     
+   // @PreAuthorize("hasAuthority('AMA_CLIENT')")
     @RequestMapping(value="/update", method = RequestMethod.POST)
     public void updateUser(@RequestBody User u) throws NullPointerException ,SQLException{
         UserIDUS uidus =  new UserIDUS();

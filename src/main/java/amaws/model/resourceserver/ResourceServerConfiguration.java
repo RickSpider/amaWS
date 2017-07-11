@@ -23,10 +23,13 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http
+       
+            http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/seguro/**").authenticated();
+                .antMatchers("/ama/datos/**").hasAuthority("AMA_CLIENT")//.authenticated()
+                .antMatchers("/ama/user/**").hasAuthority("AMA_CLIENT")//.authenticated()
+                ;
                 //.antMatchers(HttpMethod.GET, "/greeting").hasAuthority("FOO_READ");
                 //.antMatchers(HttpMethod.POST, "/foo").hasAuthority("FOO_WRITE");
                 //you can implement it like this, but I show method invocation security on write

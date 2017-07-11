@@ -133,3 +133,12 @@ CREATE INDEX relationship_2_fk
     ON public.authorities USING btree
     (username COLLATE pg_catalog."default")
     TABLESPACE pg_default;
+
+
+INSERT INTO users(
+	username, password, enabled, alertar)
+	VALUES ('Ama@admin', 'amaPass2017', true, false);
+    
+INSERT INTO public.authorities(
+	username, authority)
+	VALUES ('Ama@admin', 'AMA_ADMIN');
